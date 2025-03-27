@@ -1,0 +1,35 @@
+@page "/reusable"
+@using AdvancedBlazorComponents.Pages
+@inject AdvancedBlazorComponents.Services.WeatherForecastService ForecastService
+
+<h3>Weather Forecast</h3>
+<ul>
+@foreach (var forecast in forecasts)
+{
+    <li>@forecast.Date.ToShortDateString() - @forecast.TemperatureC (C) - @forecast.Summary</li>
+}
+</ul>
+
+<h3>Welcome @userName!</h3>
+
+<ChildComponent @ref="childComponentRef" />
+
+<button @onclick="CallChildMethod">Call Method in Child</button>
+
+@code {
+    [CascadingParameter]
+    public string userName { get; set; }
+
+    private WeatherForecast[] forecasts;
+    private ChildComponent childComponentRef;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+
+    private void CallChildMethod()
+    {
+        childComponentRef.TriggerSomething();
+    }
+}

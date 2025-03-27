@@ -1,0 +1,11 @@
+<div>
+    <h3>Child Component</h3>
+    <button @onclick="TriggerSomething">Trigger an Action</button>
+</div>
+
+@code {
+    public void TriggerSomething()
+    {
+        Console.WriteLine("Action triggered from ChildComponent!");
+    }
+}
