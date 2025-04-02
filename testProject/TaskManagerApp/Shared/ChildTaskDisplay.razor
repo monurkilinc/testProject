@@ -1,0 +1,25 @@
+<div class="card mb-3 @(isCompleted ? "bg-success text-white" : "bg-light")">
+    <div class="card-body">
+        <h5 class="card-title">@TaskName</h5>
+        <button class="btn @(isCompleted ? "btn-secondary" : "btn-primary")" @onclick="CompleteTask" disabled="@isCompleted">Mark as Complete</button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string TaskName { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnTaskCompleted { get; set; }
+
+    private bool isCompleted = false;
+
+    private async Task CompleteTask()
+    {
+        if (!isCompleted)
+        {
+            isCompleted = true;
+            await OnTaskCompleted.InvokeAsync(TaskName);
+        }
+    }
+}

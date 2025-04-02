@@ -1,0 +1,33 @@
+@page "/tasks"
+@using TaskManagerApp.Shared
+
+<h3>Task Manager</h3>
+
+@foreach (var task in tasks)
+{
+    <ChildTaskDisplay TaskName="@task" OnTaskCompleted="@HandleTaskCompleted" />
+}
+
+<button class="btn btn-primary" @onclick="AddTask">Add New Task</button>
+
+@code {
+    private List<string> tasks = new List<string>
+    {
+        "Complete Blazor tutorial",
+        "Learn component communication",
+        "Build a sample application",
+        "Test parent-child interaction",
+        "Deploy the application"
+    };
+
+    private void HandleTaskCompleted(string taskName)
+    {
+        tasks.Remove(taskName);
+        Console.WriteLine($"Task completed: {taskName}");
+    }
+
+    private void AddTask()
+    {
+        tasks.Add("New Task");
+    }
+}
